@@ -1,0 +1,122 @@
+<nav class="navbar">
+  <div class="container-fluid">
+    <span class="navbar-brand">Employee Management System</span>
+  </div>
+  <div class="search-box">
+    <input
+    type="text"
+    (input)="searchEmployeeByName($event)"
+    placeholder="Search by name..."
+  />
+  
+  </div>
+</nav><br>
+
+<div class="row">
+  <div class="col-lg-8 col-12">
+    <div class="card">
+      <div class="card-header">
+        <h4>Employee List</h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive"> <!-- Make Table Scrollable -->
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>SrNo</th>
+                <th>Name</th>
+                <th>Contact No</th>
+                <th>Email-Id</th>
+                <th>City</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of employeeList; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.contactNo }}</td>
+                <td>{{ item.emailId }}</td>
+                <td>{{ item.city }}</td>
+                <td>
+                  <button class="btn btn-primary btn-sm" (click)="onEdit(item)">Edit</button>
+                  <button class="btn btn-danger btn-sm mx-2" (click)="onDelete(item.empId)">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4 col-12">
+    <div class="card">
+      <div class="card-header">New Employee</div>
+      <div class="card-body">
+        <form [formGroup]="employeeForm">
+          <div class="mb-2">
+            <label>Name</label>
+            <input type="text" formControlName="name" class="form-control">
+            <small class="text-danger" *ngIf="employeeForm.get('name')?.invalid && employeeForm.get('name')?.touched">
+              Name is required
+            </small>
+          </div>
+
+          <div class="mb-2">
+            <label>Email-Id</label>
+            <input type="email" formControlName="emailId" class="form-control">
+            <small class="text-danger" *ngIf="employeeForm.get('emailId')?.invalid && employeeForm.get('emailId')?.touched">
+              Enter a valid email
+            </small>
+          </div>
+
+          <div class="mb-2">
+            <label>Contact No</label>
+            <input type="text" formControlName="contactNo" class="form-control">
+            <small class="text-danger" *ngIf="employeeForm.get('contactNo')?.invalid && employeeForm.get('contactNo')?.touched">
+              Enter a valid 11-digit contact number
+            </small>
+          </div>
+
+          <div class="mb-2">
+            <label>City</label>
+            <input type="text" formControlName="city" class="form-control">
+          </div>
+
+          <div class="mb-2">
+            <label>Pin Code</label>
+            <input type="text" formControlName="pincode" class="form-control">
+            <small class="text-danger" *ngIf="employeeForm.get('pincode')?.invalid && employeeForm.get('pincode')?.touched">
+              Pincode must be 5 digits
+            </small>
+          </div>
+
+          <div class="mb-2">
+            <label>Address</label>
+            <textarea formControlName="address" class="form-control"></textarea>
+            <small class="text-danger" *ngIf="employeeForm.get('address')?.invalid && employeeForm.get('address')?.touched">
+              Address must be at least 10 characters
+            </small>
+          </div>
+
+          <div class="row pt-2">
+            <div class="col-6 text-center">
+              <button class="btn btn-secondary w-100" type="reset" (click)="createForm()">Reset</button>
+            </div>
+
+            <div class="col-6 text-center">
+              <div *ngIf="!employeeForm.controls['empId'].value; else updateButton">
+                <button class="btn btn-primary w-100" type="button" [disabled]="employeeForm.invalid" (click)="onSave()">Save</button>
+              </div>
+              <ng-template #updateButton>
+                <button class="btn btn-warning w-100" type="button" [disabled]="employeeForm.invalid || !selectedEmployee" (click)="onUpdate()">Update</button>
+              </ng-template>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
