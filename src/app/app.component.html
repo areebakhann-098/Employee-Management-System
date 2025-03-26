@@ -28,6 +28,7 @@
                 <th>Contact No</th>
                 <th>Email-Id</th>
                 <th>City</th>
+                <th>Address</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -38,6 +39,7 @@
                 <td>{{ item.contactNo }}</td>
                 <td>{{ item.emailId }}</td>
                 <td>{{ item.city }}</td>
+                <td>{{item.address}}</td>
                 <td>
                   <button class="btn btn-primary btn-sm" (click)="onEdit(item)">Edit</button>
                   <button class="btn btn-danger btn-sm mx-2" (click)="onDelete(item.empId)">Delete</button>
